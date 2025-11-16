@@ -13,6 +13,7 @@ export interface CustomNodeProps {
   x: number;
   y: number;
   hasCollapse?: boolean;
+  parentPath?: Array<string | number>;
 }
 
 const CustomNodeWrapper = (nodeProps: NodeProps<NodeData>) => {
@@ -47,10 +48,18 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData>) => {
       }}
     >
       {({ node, x, y }) => {
+        // node may be the Reaflow node properties or the parsed NodeData depending on branch
         const hasKey = nodeProps.properties.text[0].key;
-        if (!hasKey) return <TextNode node={nodeProps.properties as NodeData} x={x} y={y} />;
 
-        return <ObjectNode node={node as NodeData} x={x} y={y} />;
+        // parentPath can be stored on the callback "node" or on the original properties
+        const parentPath = (node as any)?.path ?? (nodeProps.properties as any)?.path;
+
+        if (!hasKey)
+          return (
+            <TextNode node={nodeProps.properties as NodeData} x={x} y={y} parentPath={parentPath} />
+          );
+
+        return <ObjectNode node={node as NodeData} x={x} y={y} parentPath={parentPath} />;
       }}
     </Node>
   );

@@ -34,7 +34,7 @@ const Row = ({ row, x, y, index }: RowProps) => {
   );
 };
 
-const Node = ({ node, x, y }: CustomNodeProps) => (
+const Node = ({ node, x, y, parentPath }: CustomNodeProps) => (
   <Styled.StyledForeignObject
     data-id={`node-${node.id}`}
     width={node.width}

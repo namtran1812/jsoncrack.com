@@ -26,7 +26,7 @@ const StyledImage = styled.img`
   background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-const Node = ({ node, x, y }: CustomNodeProps) => {
+const Node = ({ node, x, y, parentPath }: CustomNodeProps) => {
   const { text, width, height } = node;
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
   const isImage = imagePreviewEnabled && isContentImage(JSON.stringify(text[0].value));
